@@ -1,16 +1,13 @@
 package com.bandipo.controllers;
 
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AppController {
+public class LoanController {
 
-
-    @GetMapping("/welcome")
-    public String getWelcome(){
-
-        return "Welcome to the Spring Security Course";
+    @GetMapping(path = "my-loan")
+    public String getLoanDetails(){
+        return "Loan Details";
     }
 }
