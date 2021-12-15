@@ -36,12 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
        http.cors().and().csrf().ignoringAntMatchers("/contact").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
                .authorizeRequests()
+               .antMatchers("/contact").permitAll()
+               .antMatchers("/notices").permitAll()
                .antMatchers("/my-account").authenticated()
                .antMatchers("/my-cards").authenticated()
                .antMatchers("/my-loans").authenticated()
                .antMatchers("/my-balance").authenticated()
-               .antMatchers("/contact").permitAll()
-               .antMatchers("/notices").permitAll()
           .and()
           .formLogin().and()
           .httpBasic();
