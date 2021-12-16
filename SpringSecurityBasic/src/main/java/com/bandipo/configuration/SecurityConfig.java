@@ -77,10 +77,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    }
 
 
-    @Bean
-    public UserDetailsService userDetailsService(DataSource dataSource){
-        return new JdbcUserDetailsManager(dataSource);
-    }
+
+//    @Bean
+//    public UserDetailsService userDetailsService(DataSource dataSource){
+//        return new JdbcUserDetailsManager(dataSource);
+//    }
 
 
     @Bean
