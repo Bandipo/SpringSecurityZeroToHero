@@ -2,8 +2,10 @@ package com.bandipo.controllers;
 
 
 import com.bandipo.model.AccountTransactions;
+import com.bandipo.model.Authority;
 import com.bandipo.model.Customer;
 import com.bandipo.repository.AccountTransactionsRepository;
+//import com.bandipo.repository.AuthorityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,7 @@ public class BalanceController {
 
 
     private final AccountTransactionsRepository accountTransactionsRepository;
+//    private final AuthorityRepository authorityRepository;
 
     @PostMapping("/my-balance")
     public List<AccountTransactions> getBalanceDetails(@RequestBody Customer customer) {
@@ -28,7 +31,6 @@ public class BalanceController {
 
     @GetMapping(path = "/my-balance")
     public String getBalanceDetails(){
-
         return "Account Balance";
     }
 }

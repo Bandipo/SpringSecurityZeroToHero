@@ -19,4 +19,12 @@ public class AccountController {
     public Account getAccountDetails(@RequestBody Customer customer) {
         return accountRepository.findByCustomerId(customer.getId());
     }
+
+
+    @GetMapping(path = "/my-account")
+    public String getBalanceDetails() {
+
+        return "My Account";
+
+    }
 }
