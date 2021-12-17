@@ -1,6 +1,7 @@
 package com.bandipo.model;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityCustomer implements UserDetails {
 
 
@@ -27,11 +29,13 @@ public class SecurityCustomer implements UserDetails {
 
     @Override
     public String getPassword() {
+        log.info("Inside Security Customer's getPassword");
         return customer.getPassword();
     }
 
     @Override
     public String getUsername() {
+        log.info("Inside Security Customer's getUsername");
         return customer.getEmail();
     }
 
