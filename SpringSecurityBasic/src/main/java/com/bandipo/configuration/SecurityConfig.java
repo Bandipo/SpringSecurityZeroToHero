@@ -14,8 +14,13 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.sql.DataSource;
+import java.util.Collections;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -28,7 +33,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.authorizeRequests().anyRequest().permitAll().and().formLogin().and().httpBasic();
 
 
-       http.authorizeRequests()
+       http.cors()
+
+               .and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+               .and()
+               .authorizeRequests()
                .antMatchers("/my-account").authenticated()
                .antMatchers("/my-cards").authenticated()
                .antMatchers("/my-loans").authenticated()
@@ -85,6 +94,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        return new JdbcUserDetailsManager(dataSource);
 //    }
 
+
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource(){
+        final CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+        configuration.setAllowedMethods(Collections.singletonList("*"));
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Collections.singletonList("*"));
+        configuration.setMaxAge(3600L);
+
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){

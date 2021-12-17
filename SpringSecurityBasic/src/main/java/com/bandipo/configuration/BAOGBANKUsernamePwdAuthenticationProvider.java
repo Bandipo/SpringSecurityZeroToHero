@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -38,6 +39,8 @@ public class BAOGBANKUsernamePwdAuthenticationProvider implements Authentication
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+
+
 
         final String username = authentication.getName();
         final String password = authentication.getCredentials().toString();
