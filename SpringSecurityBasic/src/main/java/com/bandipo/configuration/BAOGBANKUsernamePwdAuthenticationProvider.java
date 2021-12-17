@@ -2,6 +2,7 @@ package com.bandipo.configuration;
 
 import com.bandipo.model.Authority;
 import com.bandipo.model.Customer;
+import com.bandipo.repository.AuthorityRepository;
 import com.bandipo.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ public class BAOGBANKUsernamePwdAuthenticationProvider implements Authentication
 
     private final CustomerRepository customerRepository;
 
-//    private final AuthorityRepository authorityRepository;
+    private final AuthorityRepository authorityRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -59,17 +60,17 @@ public class BAOGBANKUsernamePwdAuthenticationProvider implements Authentication
 
 
             log.info("before here");
-//            List<Authority> authorityByCustomer = authorityRepository.findAuthorityByCustomer(customer);
+            List<Authority> authorityByCustomer = authorityRepository.findAuthorityByCustomer(customer);
 
-            List<GrantedAuthority>authorities = new ArrayList<>();
-
-            authorities.add(new SimpleGrantedAuthority(customer.getRole()));
+//            List<GrantedAuthority>authorities = new ArrayList<>();
+//
+//            authorities.add(new SimpleGrantedAuthority(customer.getRole()));
 
 //
 //            log.info("Inside here");
 //            log.info("customer Authorities: {}", authorityByCustomer);
 
-            return  new UsernamePasswordAuthenticationToken(username, password, authorities);
+            return  new UsernamePasswordAuthenticationToken(username, password, getGrantedAuthorities(authorityByCustomer));
 
         }else{
             throw new BadCredentialsException("Invalid Password");
