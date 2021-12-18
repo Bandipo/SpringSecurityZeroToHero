@@ -1,5 +1,7 @@
 package com.bandipo.configuration;
 
+import com.bandipo.configuration.filter.AuthoritiesLoggingAfterFilter;
+import com.bandipo.configuration.filter.RequestValidationBeforeFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,6 +16,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -32,10 +35,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 //        http.authorizeRequests().anyRequest().permitAll().and().formLogin().and().httpBasic();
 
-
+//.csrf().disable() how to disable csrf;
        http.cors()
 
-               .and().csrf().disable()
+               .and().csrf().csrfTokenRepository(new CookieCsrfTokenRepository())
+               .and()
+               .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+               .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
                .authorizeRequests()
                .antMatchers("/my-account").hasAnyRole(new String[]{"USER","ADMIN"})
                .antMatchers("/my-loans").hasAnyRole(new String[]{"USER","ADMIN"})

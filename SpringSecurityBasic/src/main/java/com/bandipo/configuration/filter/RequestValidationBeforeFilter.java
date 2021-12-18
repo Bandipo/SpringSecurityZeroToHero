@@ -15,13 +15,15 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.util.StringUtils;
 
+@Slf4j
 public class RequestValidationBeforeFilter implements Filter {
 
 	public static final String AUTHENTICATION_SCHEME_BASIC = "Basic";
-	private Charset credentialsCharset = StandardCharsets.UTF_8;
+	private final Charset credentialsCharset = StandardCharsets.UTF_8;
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -29,6 +31,11 @@ public class RequestValidationBeforeFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		String header = req.getHeader(AUTHORIZATION);
+
+		log.info("Inside RequestValidation Filter"); //TODO : remove
+		log.info("Header: {}", header);
+
+
 		if (header != null) {
 			header = header.trim();
 
@@ -38,6 +45,9 @@ public class RequestValidationBeforeFilter implements Filter {
 				try {
 					decoded = Base64.getDecoder().decode(base64Token);
 					String token = new String(decoded, getCredentialsCharset(req));
+
+					log.info("token: {}", token);
+
 					int delim = token.indexOf(":");
 					if (delim == -1) {
 						throw new BadCredentialsException("Invalid basic authentication token");
