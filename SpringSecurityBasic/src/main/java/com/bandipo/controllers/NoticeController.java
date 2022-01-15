@@ -22,7 +22,7 @@ public class NoticeController {
 
     @GetMapping("/notices")
     public List<Notice> getNotices() {
-        return noticeRepository.findAllActiveNotices();
+        return (List<Notice>) noticeRepository.findAll();
     }
 //    @GetMapping("/notices")
 //    public String getWelcome(){

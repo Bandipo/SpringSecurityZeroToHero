@@ -11,6 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -18,6 +19,7 @@ import org.springframework.security.web.csrf.CsrfToken;
 public class AuthoritiesLoggingAfterFilter implements Filter {
 
 	private final Logger LOG =  Logger.getLogger(AuthoritiesLoggingAfterFilter.class.getName());
+
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -35,13 +37,14 @@ public class AuthoritiesLoggingAfterFilter implements Filter {
 
 			res.addHeader("userName", authentication.getName());
 
-			CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
 
-			res.setHeader("X-CSRF-HEADER", token.getHeaderName());
+//			CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+
+//			res.setHeader("X-CSRF-HEADER", token.getHeaderName());
          // Spring Security will allow the token to be included in this parameter name
-			res.setHeader("X-CSRF-PARAM", token.getParameterName());
+//			res.setHeader("X-CSRF-PARAM", token.getParameterName());
          // this is the value of the token to be included as either a header or an HTTP parameter
-			res.setHeader("X-CSRF-TOKEN", token.getToken());
+//			res.setHeader("X-CSRF-TOKEN", token.getToken());
 
 		}
 		

@@ -12,4 +12,6 @@ public interface NoticeRepository extends CrudRepository<Notice, Long> {
 
 	@Query(value = "from Notice n where CURRENT_DATE BETWEEN n.noticBegDt AND n.noticEndDt")
 	List<Notice> findAllActiveNotices();
-}
+
+
+ }
